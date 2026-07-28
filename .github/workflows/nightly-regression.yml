@@ -1,0 +1,32 @@
+name: Nightly Regression
+
+on:
+  schedule:
+    - cron: '30 20 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: npx playwright install --with-deps
+      - run: npm run test:regression
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nightly-regression-evidence
+          path: |
+            playwright-report/
+            test-results/
+            blob-report/
+          retention-days: 30

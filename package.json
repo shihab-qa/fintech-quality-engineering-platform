@@ -1,0 +1,41 @@
+{
+  "name": "fintech-quality-engineering-platform",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-grade quality engineering portfolio for a synthetic digital lending platform.",
+  "type": "module",
+  "scripts": {
+    "sut": "node sut/server.js",
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:api": "playwright test tests/api --project=api",
+    "test:e2e": "playwright test tests/e2e --project=chromium",
+    "test:a11y": "playwright test tests/accessibility --project=chromium",
+    "test:cross-browser": "playwright test tests/e2e --project=chromium --project=firefox --project=webkit",
+    "test:mobile": "playwright test tests/e2e --project=mobile-chrome",
+    "test:headed": "playwright test tests/e2e --project=chromium --headed",
+    "test:debug": "playwright test --project=chromium --debug",
+    "test:ui-mode": "playwright test --ui",
+    "report": "playwright show-report",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "quality": "npm run format:check && npm run lint && npm run typecheck && npm run test:smoke"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@eslint/js": "^9.22.0",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^22.13.0",
+    "ajv": "^8.17.1",
+    "eslint": "^9.22.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.26.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

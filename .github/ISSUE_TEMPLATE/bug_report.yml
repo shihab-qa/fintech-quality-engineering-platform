@@ -1,0 +1,47 @@
+name: Product defect
+description: Capture a reproducible product quality issue
+title: "[DEFECT] "
+labels: [bug]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Defect summary
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options: [S1 Critical, S2 High, S3 Medium, S4 Low]
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Customer and business risk
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: "1. ...\n2. ...\n3. ..."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+    validations:
+      required: true
+  - type: input
+    id: evidence
+    attributes:
+      label: Evidence link or request ID

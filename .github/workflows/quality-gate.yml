@@ -1,0 +1,79 @@
+name: Pull Request Quality Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  static-analysis:
+    name: Static quality controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+
+  api-contract:
+    name: API and contract tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:api
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: api-test-evidence
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14
+
+  browser-smoke:
+    name: Browser smoke - ${{ matrix.browser }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: npx playwright test tests/e2e --project=${{ matrix.browser }} --grep @smoke
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-${{ matrix.browser }}-evidence
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 14

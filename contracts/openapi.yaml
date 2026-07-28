@@ -1,0 +1,50 @@
+openapi: 3.0.3
+info:
+  title: Synthetic Digital Lending API
+  version: 1.0.0
+paths:
+  /api/auth/login:
+    post:
+      summary: Authenticate a portfolio user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email }
+                password: { type: string, minLength: 8 }
+      responses:
+        '200': { description: Authenticated }
+        '401': { description: Invalid credentials }
+  /api/loans:
+    get:
+      summary: List loan applications
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: Loan collection }
+    post:
+      summary: Create a draft loan application
+      security: [{ bearerAuth: [] }]
+      responses:
+        '201': { description: Application created }
+        '400': { description: Validation failure }
+  /api/loans/{id}/status:
+    patch:
+      summary: Transition a loan application
+      security: [{ bearerAuth: [] }]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: State changed }
+        '409': { description: Invalid state transition }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
