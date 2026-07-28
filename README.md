@@ -1,8 +1,14 @@
 # Fintech Quality Engineering Platform
 
-A production-grade quality engineering portfolio built around a synthetic digital lending platform. The repository demonstrates how an experienced SQA engineer approaches product risk, automation architecture, API contracts, cross-browser behavior, accessibility, diagnostics, CI quality gates, and release evidence.
+This repository is a flagship quality engineering project within a broader software QA portfolio. It uses a synthetic digital lending platform to demonstrate risk-based testing, API and UI automation, cross-browser coverage, accessibility, performance testing, contract validation, and CI/CD quality gates.
 
-## Engineering outcomes
+## Project purpose
+
+This project demonstrates how I design and implement a complete quality engineering approach for a fintech workflow—from product-risk analysis and test architecture to automated verification, failure evidence, and release controls.
+
+The application, identities, and test data are synthetic. However, the engineering practices, quality controls, and delivery workflow are designed to reflect professional software-development standards.
+
+## Engineering capabilities demonstrated
 
 - Risk-based coverage of authentication and loan lifecycle controls
 - Independent API tests with typed clients, deterministic data factories, and cleanup
@@ -92,10 +98,10 @@ src/fixtures/            Test orchestration and dependency injection
 src/pages/               Browser page models
 src/test-data/           Deterministic synthetic data factories
 sut/                     Self-contained synthetic lending application
- tests/                   API, end-to-end, and accessibility suites
- docs/                    Strategy, architecture, traceability, and evidence
+tests/                   API, end-to-end, and accessibility suites
+docs/                    Strategy, architecture, traceability, and evidence
 ```
 
 ## Public portfolio integrity
 
-This repository uses an intentionally synthetic product and synthetic identities. It does not reproduce proprietary source code, endpoints, screenshots, customer records, or confidential business rules. Portfolio claims should describe only functionality that is committed and passing in CI.
+This repository uses an intentionally synthetic product and synthetic identities. It does not reproduce proprietary source code, endpoints, screenshots, customer records, or confidential business rules. Portfolio claims describe only functionality that is committed and passing in CI.
