@@ -1,4 +1,4 @@
-import { expect, type Locator, type Page } from '@playwright/test';
+import { expect, type Locator, type Page } from "@playwright/test";
 
 export class LoginPage {
   readonly email: Locator;
@@ -7,15 +7,17 @@ export class LoginPage {
   readonly alert: Locator;
 
   constructor(private readonly page: Page) {
-    this.email = page.getByLabel('Email');
-    this.password = page.getByLabel('Password');
-    this.submit = page.getByRole('button', { name: 'Sign in' });
-    this.alert = page.getByRole('alert');
+    this.email = page.getByLabel("Email");
+    this.password = page.getByLabel("Password");
+    this.submit = page.getByRole("button", { name: "Sign in" });
+    this.alert = page.getByRole("alert");
   }
 
   async open(): Promise<void> {
-    await this.page.goto('/login');
-    await expect(this.page.getByRole('heading', { name: 'Digital Lending Portal' })).toBeVisible();
+    await this.page.goto("/login");
+    await expect(
+      this.page.getByRole("heading", { name: "Digital Lending Portal" }),
+    ).toBeVisible();
   }
 
   async signIn(email: string, password: string): Promise<void> {

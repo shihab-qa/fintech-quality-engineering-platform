@@ -3,6 +3,7 @@
 This repository is a public, production-grade quality engineering portfolio. Its visible code and documentation must demonstrate mature engineering judgment, not tutorial-style implementation.
 
 ## Engineering rules
+
 - Use TypeScript and Playwright Test for browser and API automation.
 - Preserve clear boundaries between tests, fixtures, page models, API clients, contracts, data factories, and configuration.
 - Design every automated check around an explicit product risk or contract.
@@ -17,6 +18,7 @@ This repository is a public, production-grade quality engineering portfolio. Its
 - A change is incomplete until formatting, linting, typecheck, and the smallest relevant test suite pass.
 
 ## Codex execution protocol
+
 1. Read the relevant source, tests, architecture, and traceability before editing.
 2. State the risk being addressed and the intended verification layer.
 3. Make the smallest coherent change that solves the task.

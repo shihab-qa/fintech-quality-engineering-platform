@@ -1,9 +1,9 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from "@playwright/test";
 
-const baseURL = process.env.WEB_BASE_URL ?? 'http://127.0.0.1:4173';
+const baseURL = process.env.WEB_BASE_URL ?? "http://127.0.0.1:4173";
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: "./tests",
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
@@ -12,54 +12,54 @@ export default defineConfig({
   expect: { timeout: 7_000 },
   reporter: process.env.CI
     ? [
-        ['line'],
-        ['html', { outputFolder: 'playwright-report', open: 'never' }],
-        ['junit', { outputFile: 'test-results/junit.xml' }],
-        ['blob', { outputDir: 'blob-report' }]
+        ["line"],
+        ["html", { outputFolder: "playwright-report", open: "never" }],
+        ["junit", { outputFile: "test-results/junit.xml" }],
+        ["blob", { outputDir: "blob-report" }],
       ]
     : [
-        ['list'],
-        ['html', { outputFolder: 'playwright-report', open: 'never' }]
+        ["list"],
+        ["html", { outputFolder: "playwright-report", open: "never" }],
       ],
   use: {
     baseURL,
-    trace: 'retain-on-failure',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    trace: "retain-on-failure",
+    screenshot: "only-on-failure",
+    video: "retain-on-failure",
     actionTimeout: 10_000,
     navigationTimeout: 15_000,
-    extraHTTPHeaders: { 'x-test-suite': 'fintech-qe-platform' }
+    extraHTTPHeaders: { "x-test-suite": "fintech-qe-platform" },
   },
   webServer: {
-    command: 'npm run sut',
+    command: "npm run sut",
     url: `${baseURL}/health`,
     reuseExistingServer: !process.env.CI,
-    timeout: 20_000
+    timeout: 20_000,
   },
   projects: [
     {
-      name: 'api',
-      testMatch: /api\/.*\.spec\.ts/
+      name: "api",
+      testMatch: /api\/.*\.spec\.ts/,
     },
     {
-      name: 'chromium',
+      name: "chromium",
       testIgnore: /api\/.*\.spec\.ts/,
-      use: { ...devices['Desktop Chrome'] }
+      use: { ...devices["Desktop Chrome"] },
     },
     {
-      name: 'firefox',
+      name: "firefox",
       testMatch: /e2e\/.*\.spec\.ts/,
-      use: { ...devices['Desktop Firefox'] }
+      use: { ...devices["Desktop Firefox"] },
     },
     {
-      name: 'webkit',
+      name: "webkit",
       testMatch: /e2e\/.*\.spec\.ts/,
-      use: { ...devices['Desktop Safari'] }
+      use: { ...devices["Desktop Safari"] },
     },
     {
-      name: 'mobile-chrome',
+      name: "mobile-chrome",
       testMatch: /e2e\/.*\.spec\.ts/,
-      use: { ...devices['Pixel 7'] }
-    }
-  ]
+      use: { ...devices["Pixel 7"] },
+    },
+  ],
 });
