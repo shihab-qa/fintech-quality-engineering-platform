@@ -1,10 +1,15 @@
-import { test, expect } from '../../src/fixtures/test.fixture.js';
-import { assertLoanContract, assertLoginContract } from '../../src/contracts/loan.contract.js';
-import { buildLoan } from '../../src/test-data/loan.factory.js';
-import { env } from '../../src/utils/env.js';
+import { test, expect } from "../../src/fixtures/test.fixture.js";
+import {
+  assertLoanContract,
+  assertLoginContract,
+} from "../../src/contracts/loan.contract.js";
+import { buildLoan } from "../../src/test-data/loan.factory.js";
+import { env } from "../../src/utils/env.js";
 
-test.describe('Loan API lifecycle @api @regression', () => {
-  test('creates, retrieves, submits, approves, and removes a loan application @smoke', async ({ loanClient }) => {
+test.describe("Loan API lifecycle @api @regression", () => {
+  test("creates, retrieves, submits, approves, and removes a loan application @smoke", async ({
+    loanClient,
+  }) => {
     const login = await loanClient.login(env.userEmail, env.userPassword);
     assertLoginContract(login);
 
@@ -12,7 +17,7 @@ test.describe('Loan API lifecycle @api @regression', () => {
     const created = await loanClient.create(payload);
     await expect(created.response).toBeOK();
     assertLoanContract(created.body);
-    expect(created.body).toMatchObject({ ...payload, status: 'Draft' });
+    expect(created.body).toMatchObject({ ...payload, status: "Draft" });
 
     try {
       const retrieved = await loanClient.get(created.body.id);
@@ -20,15 +25,18 @@ test.describe('Loan API lifecycle @api @regression', () => {
       assertLoanContract(retrieved.body);
       expect(retrieved.body.id).toBe(created.body.id);
 
-      const submitted = await loanClient.transition(created.body.id, 'Submitted');
+      const submitted = await loanClient.transition(
+        created.body.id,
+        "Submitted",
+      );
       await expect(submitted.response).toBeOK();
       assertLoanContract(submitted.body);
-      expect(submitted.body.status).toBe('Submitted');
+      expect(submitted.body.status).toBe("Submitted");
 
-      const approved = await loanClient.transition(created.body.id, 'Approved');
+      const approved = await loanClient.transition(created.body.id, "Approved");
       await expect(approved.response).toBeOK();
       assertLoanContract(approved.body);
-      expect(approved.body.status).toBe('Approved');
+      expect(approved.body.status).toBe("Approved");
     } finally {
       const cleanup = await loanClient.remove(created.body.id);
       expect([204, 404]).toContain(cleanup.status());

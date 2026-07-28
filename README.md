@@ -45,15 +45,15 @@ Detailed rationale is documented in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.m
 
 ## Quality model
 
-| Risk | Verification | Gate |
-|---|---|---|
-| Unauthorized access to loan data | API and UI authentication tests | Pull request |
-| Invalid financial input accepted | API validation tests | Pull request |
-| Incorrect loan-state progression | API lifecycle and negative transition tests | Pull request |
-| Critical workflow broken in a browser | Cross-browser smoke tests | Pull request |
-| Regression in broader workflows | Tagged regression suite | Nightly |
-| Serious accessibility barrier | axe scan with retained JSON evidence | Regression |
-| Source-level vulnerability | CodeQL and dependency updates | Continuous |
+| Risk                                  | Verification                                | Gate         |
+| ------------------------------------- | ------------------------------------------- | ------------ |
+| Unauthorized access to loan data      | API and UI authentication tests             | Pull request |
+| Invalid financial input accepted      | API validation tests                        | Pull request |
+| Incorrect loan-state progression      | API lifecycle and negative transition tests | Pull request |
+| Critical workflow broken in a browser | Cross-browser smoke tests                   | Pull request |
+| Regression in broader workflows       | Tagged regression suite                     | Nightly      |
+| Serious accessibility barrier         | axe scan with retained JSON evidence        | Regression   |
+| Source-level vulnerability            | CodeQL and dependency updates               | Continuous   |
 
 ## Local execution
 

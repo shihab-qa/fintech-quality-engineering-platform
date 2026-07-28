@@ -25,6 +25,7 @@ The synthetic platform represents a controlled subset of digital lending operati
 ## Exit criteria
 
 A release candidate is acceptable when:
+
 - all pull-request quality gates pass;
 - no open S1 or S2 defect remains without approved risk acceptance;
 - critical API and browser smoke scenarios pass;

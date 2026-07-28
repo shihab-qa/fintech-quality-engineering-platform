@@ -1,5 +1,5 @@
 const page = document.body.dataset.page;
-const tokenKey = 'portfolio-token';
+const tokenKey = "portfolio-token";
 
 async function api(path, options = {}) {
   const token = localStorage.getItem(tokenKey);
@@ -7,10 +7,10 @@ async function api(path, options = {}) {
   const response = await fetch(path, {
     ...options,
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
       ...(token ? { authorization: `Bearer ${token}` } : {}),
-      ...(options.headers ?? {})
-    }
+      ...(options.headers ?? {}),
+    },
   });
 
   const body = response.status === 204 ? undefined : await response.json();
@@ -18,48 +18,50 @@ async function api(path, options = {}) {
   return { response, body };
 }
 
-if (page === 'login') {
-  document.querySelector('#login-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
+if (page === "login") {
+  document
+    .querySelector("#login-form")
+    .addEventListener("submit", async (event) => {
+      event.preventDefault();
 
-    const alert = document.querySelector('#login-alert');
-    alert.textContent = '';
+      const alert = document.querySelector("#login-alert");
+      alert.textContent = "";
 
-    const formElement = event.currentTarget;
-    const form = new FormData(formElement);
+      const formElement = event.currentTarget;
+      const form = new FormData(formElement);
 
-    const result = await api('/api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: form.get('email'),
-        password: form.get('password')
-      })
+      const result = await api("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email: form.get("email"),
+          password: form.get("password"),
+        }),
+      });
+
+      if (!result.response.ok) {
+        alert.textContent = result.body.message;
+        return;
+      }
+
+      localStorage.setItem(tokenKey, result.body.token);
+      window.location.assign("/dashboard");
     });
-
-    if (!result.response.ok) {
-      alert.textContent = result.body.message;
-      return;
-    }
-
-    localStorage.setItem(tokenKey, result.body.token);
-    window.location.assign('/dashboard');
-  });
 }
 
-if (page === 'dashboard') {
+if (page === "dashboard") {
   if (!localStorage.getItem(tokenKey)) {
-    window.location.assign('/login');
+    window.location.assign("/login");
   }
 
-  const body = document.querySelector('#applications-body');
-  const alert = document.querySelector('#form-alert');
+  const body = document.querySelector("#applications-body");
+  const alert = document.querySelector("#form-alert");
 
   async function loadApplications() {
-    const result = await api('/api/loans');
+    const result = await api("/api/loans");
 
     if (result.response.status === 401) {
       localStorage.removeItem(tokenKey);
-      window.location.assign('/login');
+      window.location.assign("/login");
       return;
     }
 
@@ -67,37 +69,37 @@ if (page === 'dashboard') {
   }
 
   function renderRow(loan) {
-    const row = document.createElement('tr');
+    const row = document.createElement("tr");
     row.dataset.loanId = loan.id;
 
     const values = [
       loan.applicantName,
-      new Intl.NumberFormat('en-US').format(loan.amount),
+      new Intl.NumberFormat("en-US").format(loan.amount),
       `${loan.termMonths} months`,
       loan.purpose,
-      loan.status
+      loan.status,
     ];
 
     for (const value of values) {
-      const cell = document.createElement('td');
+      const cell = document.createElement("td");
       cell.textContent = value;
       row.append(cell);
     }
 
-    const action = document.createElement('td');
+    const action = document.createElement("td");
 
-    if (loan.status === 'Draft') {
-      const button = document.createElement('button');
+    if (loan.status === "Draft") {
+      const button = document.createElement("button");
 
-      button.type = 'button';
-      button.textContent = 'Submit';
+      button.type = "button";
+      button.textContent = "Submit";
 
-      button.addEventListener('click', async () => {
+      button.addEventListener("click", async () => {
         const result = await api(`/api/loans/${loan.id}/status`, {
-          method: 'PATCH',
+          method: "PATCH",
           body: JSON.stringify({
-            status: 'Submitted'
-          })
+            status: "Submitted",
+          }),
         });
 
         if (result.response.ok) {
@@ -107,7 +109,7 @@ if (page === 'dashboard') {
 
       action.append(button);
     } else {
-      action.textContent = '—';
+      action.textContent = "—";
     }
 
     row.append(action);
@@ -115,35 +117,37 @@ if (page === 'dashboard') {
     return row;
   }
 
-  document.querySelector('#loan-form').addEventListener('submit', async (event) => {
-    event.preventDefault();
-    alert.textContent = '';
+  document
+    .querySelector("#loan-form")
+    .addEventListener("submit", async (event) => {
+      event.preventDefault();
+      alert.textContent = "";
 
-    const formElement = event.currentTarget;
-    const form = new FormData(formElement);
+      const formElement = event.currentTarget;
+      const form = new FormData(formElement);
 
-    const result = await api('/api/loans', {
-      method: 'POST',
-      body: JSON.stringify({
-        applicantName: form.get('applicantName'),
-        amount: Number(form.get('amount')),
-        termMonths: Number(form.get('termMonths')),
-        purpose: form.get('purpose')
-      })
+      const result = await api("/api/loans", {
+        method: "POST",
+        body: JSON.stringify({
+          applicantName: form.get("applicantName"),
+          amount: Number(form.get("amount")),
+          termMonths: Number(form.get("termMonths")),
+          purpose: form.get("purpose"),
+        }),
+      });
+
+      if (!result.response.ok) {
+        alert.textContent = "Unable to create the application.";
+        return;
+      }
+
+      formElement.reset();
+      await loadApplications();
     });
 
-    if (!result.response.ok) {
-      alert.textContent = 'Unable to create the application.';
-      return;
-    }
-
-    formElement.reset();
-    await loadApplications();
-  });
-
-  document.querySelector('#logout').addEventListener('click', () => {
+  document.querySelector("#logout").addEventListener("click", () => {
     localStorage.removeItem(tokenKey);
-    window.location.assign('/login');
+    window.location.assign("/login");
   });
 
   await loadApplications();

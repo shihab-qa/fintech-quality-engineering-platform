@@ -13,6 +13,7 @@
 ## Failure policy
 
 A failed test blocks the gate until one of the following is demonstrated:
+
 - a reproducible product defect is recorded;
 - an automation defect is fixed and validated;
 - an environmental incident is evidenced and the test is rerun successfully;
