@@ -44,7 +44,7 @@ jobs:
       - run: npx playwright install --with-deps chromium
       - run: npm run test:api
       - if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: api-test-evidence
           path: |
@@ -70,7 +70,7 @@ jobs:
       - run: npx playwright install --with-deps ${{ matrix.browser }}
       - run: npx playwright test tests/e2e --project=${{ matrix.browser }} --grep @smoke
       - if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: smoke-${{ matrix.browser }}-evidence
           path: |
