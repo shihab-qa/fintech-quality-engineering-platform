@@ -1,54 +1,68 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Loan Applications</title>
-  <link rel="stylesheet" href="/styles.css">
-</head>
-<body data-page="dashboard">
-  <header class="topbar">
-    <strong>Quality Lending</strong>
-    <button id="logout" class="secondary" type="button">Sign out</button>
-  </header>
-  <main class="shell">
-    <section class="card" aria-labelledby="page-title">
-      <p class="eyebrow">Operations Workspace</p>
-      <h1 id="page-title">Loan Applications</h1>
-      <form id="loan-form" class="grid" novalidate>
-        <div>
-          <label for="applicant-name">Applicant name</label>
-          <input id="applicant-name" name="applicantName" required>
-        </div>
-        <div>
-          <label for="amount">Amount</label>
-          <input id="amount" name="amount" type="number" min="1" required>
-        </div>
-        <div>
-          <label for="term-months">Term in months</label>
-          <input id="term-months" name="termMonths" type="number" min="1" max="60" required>
-        </div>
-        <div>
-          <label for="purpose">Purpose</label>
-          <input id="purpose" name="purpose" required>
-        </div>
-        <button type="submit">Create application</button>
-        <p id="form-alert" role="alert" aria-live="polite"></p>
-      </form>
-    </section>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Loan Applications</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="dashboard">
+    <header class="topbar">
+      <strong>Quality Lending</strong>
+      <button id="logout" class="secondary" type="button">Sign out</button>
+    </header>
+    <main class="shell">
+      <section class="card" aria-labelledby="page-title">
+        <p class="eyebrow">Operations Workspace</p>
+        <h1 id="page-title">Loan Applications</h1>
+        <form id="loan-form" class="grid" novalidate>
+          <div>
+            <label for="applicant-name">Applicant name</label>
+            <input id="applicant-name" name="applicantName" required />
+          </div>
+          <div>
+            <label for="amount">Amount</label>
+            <input id="amount" name="amount" type="number" min="1" required />
+          </div>
+          <div>
+            <label for="term-months">Term in months</label>
+            <input
+              id="term-months"
+              name="termMonths"
+              type="number"
+              min="1"
+              max="60"
+              required
+            />
+          </div>
+          <div>
+            <label for="purpose">Purpose</label>
+            <input id="purpose" name="purpose" required />
+          </div>
+          <button type="submit">Create application</button>
+          <p id="form-alert" role="alert" aria-live="polite"></p>
+        </form>
+      </section>
 
-    <section class="card" aria-labelledby="applications-title">
-      <h2 id="applications-title">Current portfolio</h2>
-      <div class="table-wrap">
-        <table aria-label="Loan applications">
-          <thead>
-            <tr><th>Applicant</th><th>Amount</th><th>Term</th><th>Purpose</th><th>Status</th><th>Action</th></tr>
-          </thead>
-          <tbody id="applications-body"></tbody>
-        </table>
-      </div>
-    </section>
-  </main>
-  <script type="module" src="/app.js"></script>
-</body>
+      <section class="card" aria-labelledby="applications-title">
+        <h2 id="applications-title">Current portfolio</h2>
+        <div class="table-wrap">
+          <table aria-label="Loan applications">
+            <thead>
+              <tr>
+                <th>Applicant</th>
+                <th>Amount</th>
+                <th>Term</th>
+                <th>Purpose</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="applications-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
 </html>

@@ -1,5 +1,5 @@
-import { expect, type Locator, type Page } from '@playwright/test';
-import type { CreateLoanRequest } from '../contracts/loan.contract.js';
+import { expect, type Locator, type Page } from "@playwright/test";
+import type { CreateLoanRequest } from "../contracts/loan.contract.js";
 
 export class DashboardPage {
   readonly heading: Locator;
@@ -11,13 +11,17 @@ export class DashboardPage {
   readonly applicationsTable: Locator;
 
   constructor(private readonly page: Page) {
-    this.heading = page.getByRole('heading', { name: 'Loan Applications' });
-    this.applicantName = page.getByLabel('Applicant name');
-    this.amount = page.getByLabel('Amount');
-    this.termMonths = page.getByLabel('Term in months');
-    this.purpose = page.getByLabel('Purpose');
-    this.createButton = page.getByRole('button', { name: 'Create application' });
-    this.applicationsTable = page.getByRole('table', { name: 'Loan applications' });
+    this.heading = page.getByRole("heading", { name: "Loan Applications" });
+    this.applicantName = page.getByLabel("Applicant name");
+    this.amount = page.getByLabel("Amount");
+    this.termMonths = page.getByLabel("Term in months");
+    this.purpose = page.getByLabel("Purpose");
+    this.createButton = page.getByRole("button", {
+      name: "Create application",
+    });
+    this.applicationsTable = page.getByRole("table", {
+      name: "Loan applications",
+    });
   }
 
   async expectLoaded(): Promise<void> {
@@ -34,6 +38,6 @@ export class DashboardPage {
   }
 
   rowForApplicant(name: string): Locator {
-    return this.applicationsTable.getByRole('row').filter({ hasText: name });
+    return this.applicationsTable.getByRole("row").filter({ hasText: name });
   }
 }

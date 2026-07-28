@@ -1,7 +1,7 @@
-import { test as base, expect } from '@playwright/test';
-import { LoanClient } from '../api/loan.client.js';
-import { DashboardPage } from '../pages/dashboard.page.js';
-import { LoginPage } from '../pages/login.page.js';
+import { test as base, expect } from "@playwright/test";
+import { LoanClient } from "../api/loan.client.js";
+import { DashboardPage } from "../pages/dashboard.page.js";
+import { LoginPage } from "../pages/login.page.js";
 
 interface PortfolioFixtures {
   loginPage: LoginPage;
@@ -18,7 +18,7 @@ export const test = base.extend<PortfolioFixtures>({
   },
   loanClient: async ({ request }, use) => {
     await use(new LoanClient(request));
-  }
+  },
 });
 
 export { expect };
